@@ -3,6 +3,7 @@
       import Home from "./routes/Home.svelte";
       import Gate from "./routes/Gate.svelte";
       import Vote from "./routes/Vote.svelte";
+      import ToastContainer from "./components/common/ToastContainer.svelte";
 
       const routes = {
             "/": Home,
@@ -19,3 +20,8 @@
 
 
 <Router {routes} />
+<ToastContainer />
+
+
+
+

@@ -1,11 +1,41 @@
 <script lang="ts">
+      import { api, ApiError } from "../../lib/api";
+      import { toasts } from "../../lib/toast";
+
 	let username = '';
 	let token = '';
 
-	function handleLogin(event: Event) {
+	async function handleLogin(event: Event) {
 		event.preventDefault();
-		console.log('Login attempt', { username, token });
-		// Add actual login logic here later
+		const result = await api.getUserData(username, token);
+            if (result === undefined) {
+                  toasts.add({
+                        title: 'Login',
+                        message: 'Login successful',
+                        type: 'success',
+                        duration: 2000
+                  });
+
+                  setTimeout(() => {
+                        window.location.hash = '/vote';
+                  }, 2000);
+            }
+		else if (result === ApiError.Unauthorized) {
+                  toasts.add({
+                        title: 'Wrong Token',
+                        message: 'Token is not valid',
+                        type: 'error',
+                        duration: 5000
+                  });
+		}
+            else if (result === ApiError.ServerError) {
+                  toasts.add({
+                        title: 'Server Error!',
+                        message: 'Something went wrong',
+                        type: 'error',
+                        duration: 5000
+                  });
+            }
 	}
 </script>
 
