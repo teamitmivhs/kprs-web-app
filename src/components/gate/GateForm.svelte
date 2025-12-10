@@ -2,12 +2,19 @@
       import { api, ApiError } from "../../lib/api";
       import { toasts } from "../../lib/toast";
 
+      let isLoading = false;
+
 	let username = '';
 	let token = '';
 
 	async function handleLogin(event: Event) {
 		event.preventDefault();
+            if(isLoading) return;
+
+            isLoading = true;
 		const result = await api.getUserData(username, token);
+            isLoading = false;
+
             if (result === undefined) {
                   toasts.add({
                         title: 'Login',
@@ -31,6 +38,14 @@
             else if (result === ApiError.ServerError) {
                   toasts.add({
                         title: 'Server Error!',
+                        message: 'Something went wrong',
+                        type: 'error',
+                        duration: 5000
+                  });
+            }
+            else {
+                  toasts.add({
+                        title: 'Unknown Error!',
                         message: 'Something went wrong',
                         type: 'error',
                         duration: 5000
@@ -65,8 +80,8 @@
       </div>
 
       <div class="flex justify-center">
-            <button type="submit" class="mt-4 bg-white text-[#8a7143] rounded-full px-6 py-3 text-xl font-semibold cursor-pointer duration-150 border border-2 border-[#8a7143] satisfying-button">
-                  Enter Gate
+            <button type="submit" disabled={isLoading} class="{isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} mt-4 bg-white text-[#8a7143] rounded-full px-6 py-3 text-xl font-semibold cursor-pointer duration-150 border border-2 border-[#8a7143] satisfying-button">
+                  {isLoading ? 'Loading...' : 'Enter Gate'}
             </button>
       </div>
 </form>
