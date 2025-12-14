@@ -1,12 +1,7 @@
 <script lang="ts">
+      import type { CandidateType } from "../../lib/types";
+
       type CandidateState = "TIM" | "VISI" | "MISI";
-      type CandidateType = {
-            president: string;
-            vice_president: string;
-            visi: string;
-            misi: string[];
-            image: string;
-      };
 
       let {
             candidate,

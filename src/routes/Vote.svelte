@@ -1,11 +1,12 @@
 <script lang="ts">
       import CandidateCard from "../components/vote/CandidateCard.svelte";
       import VoteNavbar from "../components/vote/VoteNavbar.svelte";
-      import { api, ApiError } from "../lib/api";
+      import { api, ApiError, Campus } from "../lib/api";
       import { toasts } from "../lib/toast";
+      import type { CandidateType } from "../lib/types";
       import { userdataStore } from "../lib/userdata";
 
-      const candidates = [
+      const candidates: CandidateType[] = [
             {
                   president: "Rasyad Rizky Ramadhan",
                   vice_president: "Aldi Fadlurrahmman",
@@ -16,7 +17,7 @@
                         "lorem ipsum dolor sit amet consectetur adipisicing elit",
                         "lorem ipsum dolor sit amet consectetur adipisicing elit",
                   ],
-                  campus: "MM",
+                  campus: Campus.MM,
             },
             {
                   president: "Andrea Farras",
@@ -28,7 +29,7 @@
                         "lorem ipsum dolor sit amet consectetur adipisicing elit",
                         "lorem ipsum dolor sit amet consectetur adipisicing elit",
                   ],
-                  campus: "MM",
+                  campus: Campus.MM,
             },
             {
                   president: "Ridwan Bagoes Setiawan",
@@ -40,7 +41,7 @@
                         "lorem ipsum dolor sit amet consectetur adipisicing elit",
                         "lorem ipsum dolor sit amet consectetur adipisicing elit",
                   ],
-                  campus: "PD",
+                  campus: Campus.PD,
             },
             {
                   president: "Muhammad Gilang",
@@ -52,7 +53,7 @@
                         "lorem ipsum dolor sit amet consectetur adipisicing elit",
                         "lorem ipsum dolor sit amet consectetur adipisicing elit",
                   ],
-                  campus: "PD",
+                  campus: Campus.PD,
             },
       ];
 
