@@ -6,6 +6,7 @@
       import ToastContainer from "./components/common/ToastContainer.svelte";
       import Logout from "./routes/Logout.svelte";
       import AdminGate from "./routes/AdminGate.svelte";
+      import AdminDashboard from "./routes/AdminDashboard.svelte";
 
       const routes = {
             "/": Home,
@@ -13,6 +14,7 @@
             "/vote": Vote,
             "/logout": Logout,
             "/admin": AdminGate,
+            "/admin/dashboard": AdminDashboard,
       };
 </script>
 
