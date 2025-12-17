@@ -8,3 +8,18 @@ export type CandidateType = {
       image: string;
       campus: Campus;
 };
+
+export type VoterType = {
+      name: string;
+      campus: Campus;
+};
+
+export type DetailVoteStatsType = {
+      voter_name: string,
+      candidate_name: string
+}[]
+
+export type VoteStatsType = {
+      candidate_name: string;
+      vote_count: number;
+}[];
