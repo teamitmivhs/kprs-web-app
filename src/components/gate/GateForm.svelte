@@ -29,34 +29,8 @@
                   setTimeout(() => {
                         window.location.hash = "/vote";
                   }, 2000);
-            } else if (result === ApiError.Unauthorized) {
-                  toasts.add({
-                        title: "Token Tidak Valid",
-                        message: "Token tidak valid",
-                        type: "error",
-                        duration: 5000,
-                  });
-            } else if (result === ApiError.NotFound) {
-                  toasts.add({
-                        title: "Pengguna Tidak Ditemukan",
-                        message: "Pengguna tidak ditemukan",
-                        type: "error",
-                        duration: 5000,
-                  });
-            } else if (result === ApiError.ServerError) {
-                  toasts.add({
-                        title: "Server Error!",
-                        message: "Terjadi kesalahan pada server",
-                        type: "error",
-                        duration: 5000,
-                  });
             } else {
-                  toasts.add({
-                        title: "Terjadi kesalahan!",
-                        message: "Terjadi kesalahan",
-                        type: "error",
-                        duration: 5000,
-                  });
+                  toasts.showAPI(result);
             }
       }
 </script>

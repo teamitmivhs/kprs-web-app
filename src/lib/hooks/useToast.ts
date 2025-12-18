@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { ApiError } from "../api";
 
 export type ToastType = 'success' | 'info' | 'error';
 
@@ -48,6 +49,37 @@ function createToastStore() {
                         timeoutId = null;
                   }
                   update(state => ({ ...state, isVisible: false }));
+            },
+            showAPI: (api_error: ApiError) => {
+                  if (api_error === ApiError.Unauthorized) {
+                        toasts.add({
+                              title: "Akses tidak diterima",
+                              message: "Akses tidak dikenali",
+                              type: "error",
+                              duration: 5000,
+                        });
+                  } else if (api_error === ApiError.NotFound) {
+                        toasts.add({
+                              title: "Pengguna Tidak Ditemukan",
+                              message: "Pengguna tidak ditemukan",
+                              type: "error",
+                              duration: 5000,
+                        });
+                  } else if (api_error === ApiError.ServerError) {
+                        toasts.add({
+                              title: "Server Error!",
+                              message: "Terjadi kesalahan pada server",
+                              type: "error",
+                              duration: 5000,
+                        });
+                  } else {
+                        toasts.add({
+                              title: "Terjadi kesalahan!",
+                              message: "Terjadi kesalahan",
+                              type: "error",
+                              duration: 5000,
+                        });
+                  }
             }
       };
 }

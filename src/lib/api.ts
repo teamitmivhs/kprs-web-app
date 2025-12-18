@@ -1,3 +1,5 @@
+import type { DetailVoteStatsType } from "./types";
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
 /* -------------------------------------------------------------------------- */
@@ -165,5 +167,14 @@ export const api = {
 	 */
 	getTokens: async (): Promise<GetTokensResponse | ApiError> => {
 		return request<GetTokensResponse>('/admin/token', 'GET');
+	},
+
+	/**
+	 * Get Detailed Votes
+	 * Request: (cookies only)
+	 * Response: votes data or ApiError
+	 */
+	getDetailedVotes: async (): Promise<DetailVoteStatsType | ApiError> => {
+		return request<DetailVoteStatsType>('/admin/votes', 'GET');
 	},
 };

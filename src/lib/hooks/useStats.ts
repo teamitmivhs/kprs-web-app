@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 import type { DetailVoteStatsType, VoteStatsType } from "../types";
+import { api, ApiError } from "../api";
+import { toasts } from "./useToast";
 
 
 function createDetailedVotesStore() {
@@ -17,6 +19,19 @@ function createDetailedVotesStore() {
 
 
 export const useDetailedVotesStats = createDetailedVotesStore();
+
+export async function useDetailedVotesStatsEffect() {
+      const result = await api.getDetailedVotes();
+      if(typeof result == "object") {
+            useDetailedVotesStats.set(result);
+      }
+      else {
+            toasts.showAPI(result);
+            if(result === ApiError.Unauthorized) {
+                  window.location.hash = "/admin";
+            }
+      }
+}
 
 
 function createVotesStore() {
