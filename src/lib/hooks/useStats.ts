@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { DetailVoteStatsType, VoteStatsType } from "../types";
+import type { DetailVoteStatsType, VoterTokenType, VoteStatsType } from "../types";
 import { api, ApiError } from "../api";
 import { toasts } from "./useToast";
 
@@ -53,7 +53,6 @@ export const useSimpleVotesStats = createSimpleVotesStore();
 export async function useSimpleVotesStatsEffect() {
       const result = await api.getSimpleVotes();
       if(typeof result == "object") {
-            console.log(result);
             useSimpleVotesStats.set(result);
       }
       else {
@@ -65,4 +64,53 @@ export async function useSimpleVotesStatsEffect() {
 }
 
 
+function createNumOfVotersStore() {
+      const { subscribe, set, update  } = writable<number>(0);
 
+      return {
+            subscribe,
+            set,
+            update
+      }
+}
+
+
+export const useNumOfVoters = createNumOfVotersStore();
+
+
+function createVoterTokenStore() {
+      const { subscribe, set, update  } = writable<VoterTokenType>({});
+
+      return {
+            subscribe,
+            set,
+            update
+      }
+}
+
+
+export const useVoterToken = createVoterTokenStore();
+
+export async function useVoterTokenEffect() {
+      const result = await api.getTokens();
+      if(typeof result == "object") {
+            let voter_token_result: VoterTokenType = {};
+
+            Object.entries(result.static_voter_data).forEach(([voter_name, voter_data]) => {
+                  voter_token_result[voter_name] = voter_data.token;
+            });
+
+            Object.entries(result.changed_voter_tokens).forEach(([voter_name, voter_token]) => {
+                  voter_token_result[voter_name] = voter_token;
+            });
+            
+            useVoterToken.set(voter_token_result);
+            useNumOfVoters.set(Object.keys(voter_token_result).length);
+      }
+      else {
+            toasts.showAPI(result);
+            if(result === ApiError.Unauthorized) {
+                  window.location.hash = "/admin";
+            }
+      }
+}

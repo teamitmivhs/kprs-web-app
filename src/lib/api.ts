@@ -1,4 +1,4 @@
-import type { DetailVoteStatsType, VoteStatsType } from "./types";
+import type { DetailVoteStatsType, VoterType, VoteStatsType } from "./types";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
@@ -35,7 +35,7 @@ export interface ResetVoteResponse {
 
 export interface GetTokensResponse {
 	changed_voter_tokens: Record<string, string>;
-	static_voter_tokens: Record<string, string>;
+	static_voter_data: Record<string, VoterType>;
 }
 
 /* -------------------------------------------------------------------------- */

@@ -12,6 +12,8 @@ export type CandidateType = {
 export type VoterType = {
       name: string;
       campus: Campus;
+      class: string,
+      token: string
 };
 
 export type VoterName = string;
@@ -25,3 +27,10 @@ export type VotesCount = number;
 export type VoteStatsType = {
       [CandidateName: string]: VotesCount
 };
+
+
+export type VoterToken = string;
+
+export type VoterTokenType = {
+      [VoterName: string]: VoterToken
+}
