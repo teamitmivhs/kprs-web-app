@@ -1,4 +1,4 @@
-import type { DetailVoteStatsType } from "./types";
+import type { DetailVoteStatsType, VoteStatsType } from "./types";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
@@ -172,9 +172,18 @@ export const api = {
 	/**
 	 * Get Detailed Votes
 	 * Request: (cookies only)
-	 * Response: votes data or ApiError
+	 * Response: detailed votes data or ApiError
 	 */
 	getDetailedVotes: async (): Promise<DetailVoteStatsType | ApiError> => {
 		return request<DetailVoteStatsType>('/admin/votes', 'GET');
+	},
+
+	/**
+	 * Get Simple Votes
+	 * Request: (cookies only)
+	 * Response: simple votes data or ApiError
+	 */
+	getSimpleVotes: async (): Promise<VoteStatsType | ApiError> => {
+		return request<VoteStatsType>('/admin/votes/simple', 'GET');
 	},
 };

@@ -14,11 +14,14 @@ export type VoterType = {
       campus: Campus;
 };
 
+export type VoterName = string;
+
 export type DetailVoteStatsType = {
-      [key: string]: string
+      [CandidateName: string]: VoterName
 }
 
+export type VotesCount = number;
+
 export type VoteStatsType = {
-      candidate_name: string;
-      vote_count: number;
-}[];
+      [CandidateName: string]: VotesCount
+};

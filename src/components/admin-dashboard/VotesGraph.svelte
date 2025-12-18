@@ -1,6 +1,6 @@
 <script lang="ts">
       import Chart from "chart.js/auto";
-      import { useDetailedVotesStats, useDetailedVotesStatsEffect, useVotesStats } from "../../lib/hooks/useStats";
+      import { useDetailedVotesStats, useDetailedVotesStatsEffect, useSimpleVotesStats, useSimpleVotesStatsEffect } from "../../lib/hooks/useStats";
       import { onMount } from "svelte";
 
       let voteStatsCanvas: HTMLCanvasElement | null;
@@ -10,19 +10,22 @@
 
       onMount(() => {
             useDetailedVotesStatsEffect();
+            useSimpleVotesStatsEffect();
       });
             
       $effect(() => {
             if(!voteStatsCanvas || !votedByVoterStatsCanvas) return;
+
+            console.log($useSimpleVotesStats);
             
             let numOfVotes = Object.keys($useDetailedVotesStats).length;
             let chart1 = new Chart(voteStatsCanvas, {
                   type: "pie",
                   data: {
-                        labels: $useVotesStats.map(voteData => voteData.candidate_name),
+                        labels: Object.keys($useSimpleVotesStats),
                         datasets: [
                               {
-                                    data: $useVotesStats.map(voteData => voteData.vote_count),
+                                    data: Object.values($useSimpleVotesStats),
                                     backgroundColor: ["#52ACFF", "#ACCC99"],
                               },
                         ],

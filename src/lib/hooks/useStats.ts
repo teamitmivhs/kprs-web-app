@@ -34,17 +34,11 @@ export async function useDetailedVotesStatsEffect() {
 }
 
 
-function createVotesStore() {
-      const { subscribe, set, update  } = writable<VoteStatsType>([
-            {
-                  candidate_name: "Rasyad Rizky Ramadhan",
-                  vote_count: 20
-            },
-            {
-                  candidate_name: "Andrea Farras",
-                  vote_count: 30
-            },
-      ]);
+function createSimpleVotesStore() {
+      const { subscribe, set, update  } = writable<VoteStatsType>({
+            "Rasyad Rizky Ramadhan": 20,
+            "Andrea Farras": 30
+      });
 
       return {
             subscribe,
@@ -54,7 +48,21 @@ function createVotesStore() {
 }
 
 
-export const useVotesStats = createVotesStore();
+export const useSimpleVotesStats = createSimpleVotesStore();
+
+export async function useSimpleVotesStatsEffect() {
+      const result = await api.getSimpleVotes();
+      if(typeof result == "object") {
+            console.log(result);
+            useSimpleVotesStats.set(result);
+      }
+      else {
+            toasts.showAPI(result);
+            if(result === ApiError.Unauthorized) {
+                  window.location.hash = "/admin";
+            }
+      }
+}
 
 
 
