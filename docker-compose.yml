@@ -2,4 +2,4 @@ services:
         webserver:
                 build: .
                 ports:
-                        - "5173:5173"
+                        - "3000:3000"

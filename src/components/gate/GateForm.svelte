@@ -1,7 +1,7 @@
 <script lang="ts">
       import { api } from "../../lib/api";
       import { toasts } from "../../lib/hooks/useToast";
-      import { userDataStore } from "../../lib/hooks/useUserData";
+      import { userDataStore } from "../../lib/hooks/useUserdata";
 
       let isLoading = $state(false);
 

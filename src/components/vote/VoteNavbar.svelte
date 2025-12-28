@@ -1,6 +1,6 @@
 <script lang="ts">
       import profileIcon from "../../assets/icons/profile-icon.webp";
-      import { userDataStore } from "../../lib/hooks/useUserData";
+      import { userDataStore } from "../../lib/hooks/useUserdata";
 
       function handleLogoutClick() {
             window.location.hash = "/logout";

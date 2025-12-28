@@ -4,7 +4,7 @@
       import { api } from "../lib/api";
       import { toasts } from "../lib/hooks/useToast";
       import { ApiError, Campus, type CandidateType } from "../lib/types";
-      import { userDataStore } from "../lib/hooks/useUserData";
+      import { userDataStore } from "../lib/hooks/useUserdata";
       import { candidateDataStore } from "../lib/hooks/useCandidateData";
 
 
@@ -15,7 +15,7 @@
 
       async function vote_candidate(index: number) {
             if($candidateDataStore == null) return;
-            
+
             is_voting = true;
             let result = await api.vote($candidateDataStore[index].president);
             if (result === undefined) {

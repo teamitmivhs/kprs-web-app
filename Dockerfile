@@ -1,20 +1,38 @@
-# Use the official Node.js image
-FROM node:24
+# --- Stage 1: Build Frontend ---
+FROM node:24-alpine AS build-stage
+WORKDIR /kprs/src/frontend
 
-# Set working directory inside the container
-WORKDIR /kprs/src/frontend/
-
-# Copy package.json and package-lock.json first (for caching)
+# Copy dependency files first to leverage Docker caching
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy the rest of your source code
 COPY . .
 
-# Expose the port your app runs on
-EXPOSE 5173
+# Run the Vite build command
+RUN npm run build
 
-# Run your app
-CMD ["npm", "run", "dev"]
+# --- Stage 2: Production Server ---
+FROM node:24-alpine AS production-stage
+WORKDIR /kprs/src/frontend
+
+# Only install production-specific dependencies (Express, Compression, etc.)
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+# Copy only the built 'dist' folder from the first stage
+COPY --from=build-stage /kprs/src/frontend/dist ./dist
+
+# Copy your Express server file
+COPY server.js ./
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOST=0.0.0.0
+
+# Expose the port your Express app listens on
+EXPOSE 3000
+
+# Run the server
+CMD ["node", "server.js"]
