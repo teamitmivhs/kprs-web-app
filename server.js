@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import cors from "cors";
 import { fileURLToPath } from "url";
 import compression from "compression";
 import helmet from "helmet";
@@ -8,11 +9,27 @@ const DIRNAME = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "127.0.0.1";
+const CORS_ORIGIN = process.env.CORS_ORIGIN || undefined;
+
+if (!CORS_ORIGIN) {
+    console.error("CORS ORIGIN is not specified!");
+    exit(1);
+}
 
 let request_count = 0;
 
-// 1. Security: Sets various HTTP headers to protect your app
-app.use(helmet());
+// 1. Security: Sets various HTTP headers to protect your app + CORS
+app.use(helmet({
+    crossOriginResourcePolicy: {
+        policy: "cross-origin"
+    }
+}));
+
+app.use(cors({
+    origin: CORS_ORIGIN,
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
 
 // 2. Performance: Compresses responses (Gzip/Brotli) to reduce file size
 app.use(compression());

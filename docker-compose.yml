@@ -1,5 +1,9 @@
 services:
         webserver:
                 build: .
+                environment:
+                        PORT: ${PORT}
+                        HOST: ${HOST}
+                        CORS_ORIGIN: ${CORS_ORIGIN}
                 ports:
                         - "3000:3000"

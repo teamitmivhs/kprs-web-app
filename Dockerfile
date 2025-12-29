@@ -28,8 +28,6 @@ COPY server.js ./
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PORT=3000
-ENV HOST=0.0.0.0
 
 # Expose the port your Express app listens on
 EXPOSE 3000
